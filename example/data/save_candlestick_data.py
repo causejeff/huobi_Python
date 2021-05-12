@@ -19,9 +19,9 @@ def callback(candlestick_event: 'CandlestickEvent'):
 
     file_name = time.strftime("%Y-%m-%d", time.localtime())
     with open(file_path + "/" + file_name, "a+") as f:
-        f.write(candlestick_event.ts + "," + candlestick_event.ch +"," +candlestick_event.tick.open+
-                ","+candlestick_event.tick.high, +","+ candlestick_event.tick.low + "," +candlestick_event.tick.close
-                +"," + candlestick_event.tick.amount, +","+candlestick_event.tick.vol)
+        f.write(str(candlestick_event.ts) + "," + str(candlestick_event.ch) +"," +str(candlestick_event.tick.open)+
+                ","+str(candlestick_event.tick.high), +","+ str(candlestick_event.tick.low) + "," +str(candlestick_event.tick.close)
+                +"," + str(candlestick_event.tick.amount), +","+str(candlestick_event.tick.vol))
 
 
 def error(e: 'HuobiApiException'):
