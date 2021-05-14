@@ -6,24 +6,44 @@ from huobi.constant import *
 from huobi.exception.huobi_api_exception import HuobiApiException
 from huobi.model.market.candlestick_event import CandlestickEvent
 
+today = date.today()
+global_file_path = '/data/eth/' + str(today.year) + '/' + str(today.month)
+global_file_name = time.strftime("%Y-%m-%d", time.localtime())
+current_file_name = global_file_name
 
+try:
+    os.makedirs(global_file_path, mode=0o770)
+except FileExistsError as e:
+    print(e)
+
+current_file = open(global_file_path + "/" + global_file_name)
+
+exist_path = {global_file_path: 1}
 
 
 def callback(candlestick_event: 'CandlestickEvent'):
-    today = date.today()
     file_path = '/data/eth/' + str(today.year) + '/' + str(today.month)
-    try:
-        os.makedirs(file_path, mode=0o770)
-    except FileExistsError as e:
-        print(e)
     file_name = time.strftime("%Y-%m-%d", time.localtime())
-    with open(file_path + "/" + file_name, "a+") as f:
-        content = (time.strftime("%Y-%m-%d %H:%M", time.localtime(candlestick_event.ts / 1000)) + "," +
-                   str(candlestick_event.ts) + "," + str(candlestick_event.tick.open) + "," +
-                   str(candlestick_event.tick.high) + "," + str(candlestick_event.tick.low) + "," +
-                   str(candlestick_event.tick.close) + "," + str(candlestick_event.tick.amount) + "," +
-                   str(candlestick_event.tick.vol) + "\n")
-        f.write(content)
+    is_exist = exist_path[file_path]
+    if not is_exist:
+        try:
+            os.makedirs(file_path, mode=0o770)
+            exist_path[file_path] = 1
+        except FileExistsError as e:
+            print(e)
+    if current_file_name != file_name:
+        global current_file
+        global current_file_name
+        current_file.close()
+        current_file = open(file_path + "/" + file_name)
+        current_file_name = file_name
+
+    content = (time.strftime("%Y-%m-%d %H:%M", time.localtime(candlestick_event.ts / 1000)) + "," +
+               str(candlestick_event.ts) + "," + str(candlestick_event.tick.open) + "," +
+               str(candlestick_event.tick.high) + "," + str(candlestick_event.tick.low) + "," +
+               str(candlestick_event.tick.close) + "," + str(candlestick_event.tick.amount) + "," +
+               str(candlestick_event.tick.vol) + "\n")
+    current_file.write(content)
 
 
 def error(e: 'HuobiApiException'):
