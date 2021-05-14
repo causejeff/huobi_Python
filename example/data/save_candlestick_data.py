@@ -11,7 +11,7 @@ from huobi.model.market.candlestick_event import CandlestickEvent
 
 def callback(candlestick_event: 'CandlestickEvent'):
     today = date.today()
-    file_path = '/data/eth/' + str(today.year) + '/' + str((today.month + 1))
+    file_path = '/data/eth/' + str(today.year) + '/' + str(today.month)
     try:
         os.makedirs(file_path, mode=0o770)
     except FileExistsError as e:
@@ -19,10 +19,10 @@ def callback(candlestick_event: 'CandlestickEvent'):
     candlestick_event.print_object()
     file_name = time.strftime("%Y-%m-%d", time.localtime())
     with open(file_path + "/" + file_name, "a+") as f:
-
-        f.write(str(candlestick_event.ts) + "," + candlestick_event.ch + "," + str(candlestick_event.tick.open) +
-                "," + str(candlestick_event.tick.high), +"," + str(candlestick_event.tick.low) + "," + str(candlestick_event.tick.close)
-                + "," + str(candlestick_event.tick.amount), +","+str(candlestick_event.tick.vol))
+        content = str(candlestick_event.ts) + "," + str(candlestick_event.ch) + "," + str(candlestick_event.tick.open) \
+                  + "," + str(candlestick_event.tick.high), +"," + str(candlestick_event.tick.low) \
+                  + "," + str(candlestick_event.tick.close) + "," + str(candlestick_event.tick.amount), +","+str(candlestick_event.tick.vol)
+        f.write(content)
 
 
 def error(e: 'HuobiApiException'):
