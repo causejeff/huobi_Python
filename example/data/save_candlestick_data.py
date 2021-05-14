@@ -16,7 +16,7 @@ try:
 except FileExistsError as e:
     print(e)
 
-current_file = open(global_file_path + "/" + global_file_name)
+current_file = open(global_file_path + "/" + global_file_name, "a+")
 
 exist_path = {global_file_path: 1}
 
@@ -35,7 +35,7 @@ def callback(candlestick_event: 'CandlestickEvent'):
     if current_file_name != file_name:
         global current_file
         current_file.close()
-        current_file = open(file_path + "/" + file_name)
+        current_file = open(file_path + "/" + file_name, "a+")
         current_file_name = file_name
 
     content = (time.strftime("%Y-%m-%d %H:%M", time.localtime(candlestick_event.ts / 1000)) + "," +
