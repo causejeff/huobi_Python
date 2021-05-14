@@ -11,7 +11,7 @@ from huobi.model.market.candlestick_event import CandlestickEvent
 
 def callback(candlestick_event: 'CandlestickEvent'):
     today = date.today()
-    file_path = '/data/eth/' + today.year + '/' + (today.month + 1)
+    file_path = '/data/eth/' + str(today.year) + '/' + str((today.month + 1))
     try:
         os.makedirs(file_path, mode=0o770)
     except FileExistsError as e:
