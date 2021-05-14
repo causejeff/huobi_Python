@@ -16,9 +16,10 @@ def callback(candlestick_event: 'CandlestickEvent'):
         os.makedirs(file_path, mode=0o770)
     except FileExistsError as e:
         print(e)
-
+    candlestick_event.print_object()
     file_name = time.strftime("%Y-%m-%d", time.localtime())
     with open(file_path + "/" + file_name, "a+") as f:
+
         f.write(str(candlestick_event.ts) + "," + candlestick_event.ch + "," + str(candlestick_event.tick.open) +
                 "," + str(candlestick_event.tick.high), +"," + str(candlestick_event.tick.low) + "," + str(candlestick_event.tick.close)
                 + "," + str(candlestick_event.tick.amount), +","+str(candlestick_event.tick.vol))
