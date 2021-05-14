@@ -18,7 +18,7 @@ def callback(candlestick_event: 'CandlestickEvent'):
         print(e)
     file_name = time.strftime("%Y-%m-%d", time.localtime())
     with open(file_path + "/" + file_name, "a+") as f:
-        content = (time.strftime("%Y-%m-%d %H:%M", time.localtime(candlestick_event.ts)) + "," +
+        content = (time.strftime("%Y-%m-%d %H:%M", time.localtime(candlestick_event.ts / 1000)) + "," +
                    str(candlestick_event.ts) + "," + str(candlestick_event.tick.open) + "," +
                    str(candlestick_event.tick.high) + "," + str(candlestick_event.tick.low) + "," +
                    str(candlestick_event.tick.close) + "," + str(candlestick_event.tick.amount) + "," +
