@@ -19,9 +19,10 @@ def callback(candlestick_event: 'CandlestickEvent'):
     candlestick_event.print_object()
     file_name = time.strftime("%Y-%m-%d", time.localtime())
     with open(file_path + "/" + file_name, "a+") as f:
-        content = str(candlestick_event.ts) + "," + str(candlestick_event.ch) + "," + str(candlestick_event.tick.open) \
-                  + "," + str(candlestick_event.tick.high) + "," + str(candlestick_event.tick.low) \
-                  + "," + str(candlestick_event.tick.close) + "," + str(candlestick_event.tick.amount) + "," + str(candlestick_event.tick.vol)
+        content = (str(candlestick_event.ts) + "," + str(candlestick_event.ch) + "," +
+                   str(candlestick_event.tick.open) + "," + str(candlestick_event.tick.high) + "," +
+                   str(candlestick_event.tick.low)+ "," + str(candlestick_event.tick.close) + "," +
+                   str(candlestick_event.tick.amount) + "," + str(candlestick_event.tick.vol))
         f.write(content)
 
 
