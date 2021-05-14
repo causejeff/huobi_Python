@@ -34,7 +34,6 @@ def callback(candlestick_event: 'CandlestickEvent'):
     global current_file_name
     if current_file_name != file_name:
         global current_file
-        global current_file_name
         current_file.close()
         current_file = open(file_path + "/" + file_name)
         current_file_name = file_name
