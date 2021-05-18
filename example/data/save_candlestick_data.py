@@ -27,7 +27,7 @@ def callback(candlestick_event: 'CandlestickEvent'):
     file_path = '/data/eth/' + str(today.year) + '/' + str(today.month)
     file_name = time.strftime("%Y-%m-%d", time.localtime())
     is_exist = exist_path[file_path]
-    log_file.write("responseTime: " + candlestick_event.ts)
+    log_file.write("responseTime: " + str(candlestick_event.ts))
     log_file.flush()
     if not is_exist:
         try:
