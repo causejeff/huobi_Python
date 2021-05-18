@@ -14,7 +14,7 @@ current_file_name = global_file_name
 try:
     os.makedirs(global_file_path, mode=0o770)
 except FileExistsError as e:
-    print(e)
+    pass
 
 current_file = open(global_file_path + "/" + global_file_name, "a+")
 
