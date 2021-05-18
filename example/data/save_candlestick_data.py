@@ -30,10 +30,11 @@ def callback(candlestick_event: 'CandlestickEvent'):
             os.makedirs(file_path, mode=0o770)
             exist_path[file_path] = 1
         except FileExistsError as e:
-            print(e)
+            pass
     global current_file_name
     if current_file_name != file_name:
         global current_file
+        current_file.flush()
         current_file.close()
         current_file = open(file_path + "/" + file_name, "a+")
         current_file_name = file_name
