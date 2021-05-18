@@ -44,6 +44,7 @@ def callback(candlestick_event: 'CandlestickEvent'):
                str(candlestick_event.tick.high) + "," + str(candlestick_event.tick.low) + "," +
                str(candlestick_event.tick.close) + "," + str(candlestick_event.tick.amount) + "," +
                str(candlestick_event.tick.vol) + "\n")
+    print("response time: " + str(candlestick_event.ts))
     current_file.write(content)
 
 
