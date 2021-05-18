@@ -25,6 +25,7 @@ def callback(candlestick_event: 'CandlestickEvent'):
     file_path = '/data/eth/' + str(today.year) + '/' + str(today.month)
     file_name = time.strftime("%Y-%m-%d", time.localtime())
     is_exist = exist_path[file_path]
+    print("response time: " + str(candlestick_event.ts))
     if not is_exist:
         try:
             os.makedirs(file_path, mode=0o770)
@@ -44,7 +45,6 @@ def callback(candlestick_event: 'CandlestickEvent'):
                str(candlestick_event.tick.high) + "," + str(candlestick_event.tick.low) + "," +
                str(candlestick_event.tick.close) + "," + str(candlestick_event.tick.amount) + "," +
                str(candlestick_event.tick.vol) + "\n")
-    print("response time: " + str(candlestick_event.ts))
     current_file.write(content)
 
 
