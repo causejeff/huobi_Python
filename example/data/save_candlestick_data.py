@@ -20,15 +20,15 @@ current_file = open(global_file_path + "/" + global_file_name, "a+")
 
 exist_path = {global_file_path: 1}
 
-log_file = open("response.log", "w")
+#log_file = open("response.log", "w")
 
 
 def callback(candlestick_event: 'CandlestickEvent'):
     file_path = '/data/eth/' + str(today.year) + '/' + str(today.month)
     file_name = time.strftime("%Y-%m-%d", time.localtime())
     is_exist = exist_path[file_path]
-    log_file.write("responseTime: " + str(candlestick_event.ts))
-    log_file.flush()
+    # log_file.write("responseTime: " + str(candlestick_event.ts))
+    # log_file.flush()
     if not is_exist:
         try:
             os.makedirs(file_path, mode=0o770)
