@@ -3,9 +3,10 @@ import os
 import hashlib
 import json
 import urllib.parse
+import time
 
-#base_path = "/Users/zhouyuan/data"
-base_path = "/data/eth/"
+base_path = "/Users/zhouyuan/data"
+#base_path = "/data/eth/"
 
 # files = os.listdir(base_path)
 # for file in files:
@@ -52,18 +53,30 @@ def upload_file(path, real_file, size):
 
         pre_res = json.loads(res_value)
         if pre_res["errno"] == 0:
+            time.sleep(0.01)
             upload_id = pre_res["uploadid"]
             for i in range(len(block_list)):
-                # real_up_url = upload_url + "&path=" + urllib.parse.quote(real_up_path) + "&type=tmpfile&uploadid=" + upload_id + "&partseq=" + str(i)
-                url_params = {"path": real_up_path, "type": "tmpfile", "uploadid": upload_id, "partseq": i}
-                pp = urllib.parse.urlencode(url_params)
-                print(pp)
-                # print(block_list[i])
-                real_up_url = upload_url + "&" + pp
-                print(real_up_url)
-                param_files = [('file', block_list[i])]
-                response = requests.request("POST", real_up_url, headers=headers, files=param_files, timeout=(5, 100))
-                print(response.text.encode('utf8'))
+                try_times = 0
+                while try_times < 5:
+                    try:
+                        # real_up_url = upload_url + "&path=" + urllib.parse.quote(real_up_path) + "&type=tmpfile&uploadid=" + upload_id + "&partseq=" + str(i)
+                        url_params = {"path": real_up_path, "type": "tmpfile", "uploadid": upload_id, "partseq": i}
+                        pp = urllib.parse.urlencode(url_params)
+                        print(pp)
+                        # print(block_list[i])
+                        real_up_url = upload_url + "&" + pp
+                        print(real_up_url)
+                        param_files = {'file': block_list[i]}
+                        response = requests.request("POST", real_up_url, headers=headers, files=param_files, timeout=(5, 100))
+                        print(response.text.encode('utf8'))
+                        break
+                    except Exception as e:
+                        print(repr(e))
+                        try_times += 1
+                        if try_times >= 5:
+                            raise e
+
+
 
 
 for root, dirs, files in os.walk(base_path):
