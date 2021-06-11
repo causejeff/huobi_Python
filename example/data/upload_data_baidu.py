@@ -13,7 +13,7 @@ base_path = "/Users/zhouyuan/data"
 current_file = "2020-12-01"
 auth_token = "123.e55fd01e7b4daa383f43cd8516364773.YQ8NuMSGX7ZaG0qyZnOmjA_rpiC2Ogbee0fCDHe.WFQmiQ"
 pre_url = "http://pan.baidu.com/rest/2.0/xpan/file?method=precreate&access_token=" + auth_token
-upload_url = url = "https://d.pcs.baidu.com/rest/2.0/pcs/superfile2?method=upload&access_token=" + auth_token
+upload_url = "https://d.pcs.baidu.com/rest/2.0/pcs/superfile2?method=upload&access_token=" + auth_token
 up_root = "/apps/eth/eth"
 
 
