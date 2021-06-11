@@ -4,7 +4,8 @@ import hashlib
 import json
 import urllib.parse
 
-base_path = "/Users/zhouyuan/data"
+#base_path = "/Users/zhouyuan/data"
+base_path = "/data/eth/"
 
 # files = os.listdir(base_path)
 # for file in files:
